@@ -9,7 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    
     @IBOutlet private weak var segmentController: UISegmentedControl!
     
     @IBOutlet private weak var answerLabel: UILabel!
@@ -23,32 +22,23 @@ class ViewController: UIViewController {
         let number = Double(textField.text!) ?? 0
         let number2 = Double(textField2.text!) ?? 0
         
-        let index = segmentController.selectedSegmentIndex
-        
-        if index == 0 {
-            let answer = number + number2
-            answerLabel.text = String(format: "%.1f", answer)
-            
-        }else if index == 1 {
-            let answer = number - number2
-            answerLabel.text = String(format: "%.1f", answer)
-            
-        }else if index == 2 {
-            
-            let answer = number * number2
-            answerLabel.text = String(format: "%.1f", answer)
-            
-        }else if index == 3 && number == 0 || number2 == 0 {
-            
-            answerLabel.text = "割る数には0以外を入力して下さい。"
-        }else {
-            let answer = number / number2
-            answerLabel.text = String(format: "%.1f", answer)
-            
-         }
-       }
+        let answerText: String
+
+        switch segmentController.selectedSegmentIndex {
+        case 0:
+            answerText = String(format: "%.1f", number + number2)
+        case 1:
+            answerText = String(format: "%.1f", number - number2)
+        case 2:
+            answerText = String(format: "%.1f", number * number2)
+        case 3 where number2 == 0:
+            answerText = "割る数には0以外を入力して下さい。"
+        case 3:
+            answerText = String(format: "%.1f", number / number2)
+        default:
+            fatalError("Invalid selectedSegmentIndex")
+        }
+
+        answerLabel.text = answerText
     }
-    
-
-
-
+}
